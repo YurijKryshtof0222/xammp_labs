@@ -60,6 +60,15 @@
         echo "<p>Дані збережені у Базу даних.</p>";
     }
 
+    function clear() {
+        $con = connect_to_db();
+
+        $delete_query = "DELETE FROM tabulation";
+        mysqli_query($con , $delete_query) or die(mysqli_error($con));
+
+        echo "<p>Дані таблиці успішно видалені</p>";
+    }
+
     function read_from_db() {
         $con = connect_to_db();
     
@@ -70,6 +79,7 @@
             echo "<h2>Записи у таблиці tabulation:</h2>";
             echo "<table border='1'>
             <tr>
+            <th>ID</th>
             <th>X</th>
             <th>Y</th>
             <th>Z</th>
@@ -78,6 +88,7 @@
     
             while ($row = mysqli_fetch_array($result)) {
                 echo "<tr>";
+                echo "<td>" . $row['id'] ."</td>";
                 echo "<td>" . $row['x'] . "</td>";
                 echo "<td>" . $row['y'] . "</td>";
                 echo "<td>" . $row['z'] . "</td>";
@@ -102,7 +113,13 @@
         write_to_db_19($variant);
 
         read_from_db();
-
+        
+        echo 
+        '<form action="process_form.php" method="post">
+            <input type="submit" name="clear_data"/>
+        </form>';
+    } else if (isset($_POST['clear_data'])){
+        clear();
     } else {
         echo "<p>Форма не була відправлена.</p>";
     }
