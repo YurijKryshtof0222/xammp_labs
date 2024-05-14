@@ -5,7 +5,7 @@ if (isset($_POST["query"]) && !empty($_POST["query"])) {
     $searchQuery = $_POST["query"];
 
     $sql = "SELECT * FROM teams WHERE 
-            (name LIKE '%$searchQuery%' OR 
+           (name LIKE '%$searchQuery%' OR 
             city LIKE '%$searchQuery%' OR 
             manager LIKE '%$searchQuery%' OR 
             stadium LIKE '%$searchQuery%')";
@@ -13,17 +13,22 @@ if (isset($_POST["query"]) && !empty($_POST["query"])) {
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        echo "<ul>";
+        echo "<table>";
+        echo "<tr><th>Name</th><th>City</th><th>Manager</th></tr>";
         while ($row = $result->fetch_assoc()) {
-            echo "<li>" . $row["name"] . " - " . $row["city"] . " - " . $row["manager"] . "</li>";
+            echo "<tr>";
+            echo "<td>" . $row["name"] . "</td>";
+            echo "<td>" . $row["city"] . "</td>";
+            echo "<td>" . $row["manager"] . "</td>";
+            echo "</tr>";
         }
-        echo "</ul>";
-    }else {
-        echo "No teams found.";
-    }
+        echo "</table>";
     } else {
-        echo "Invalid search query.";
+        echo "Команд не знайдено.";
     }
+} else {
+    echo "Invalid search query.";
+}
 
 $conn->close();
 ?>
