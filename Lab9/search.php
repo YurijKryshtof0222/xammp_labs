@@ -14,12 +14,13 @@ if (isset($_POST["query"]) && !empty($_POST["query"])) {
 
     if ($result->num_rows > 0) {
         echo "<table>";
-        echo "<tr><th>Name</th><th>City</th><th>Manager</th></tr>";
+        echo "<tr><th>Назва</th><th>Місто</th><th>Тренер</th><th>Стадіон</th></tr>";
         while ($row = $result->fetch_assoc()) {
             echo "<tr>";
             echo "<td>" . $row["name"] . "</td>";
             echo "<td>" . $row["city"] . "</td>";
             echo "<td>" . $row["manager"] . "</td>";
+            echo "<td>" . $row["stadium"] . "</td>";
             echo "</tr>";
         }
         echo "</table>";
